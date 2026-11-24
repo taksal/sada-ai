@@ -112,7 +112,7 @@ nav{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-
 .tag::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:conic-gradient(from var(--a,0deg),var(--c1),var(--c2),var(--c3),transparent 60%,var(--c1));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:rot 4s linear infinite}
 @property --a{syntax:"<angle>";inherits:false;initial-value:0deg}
 @keyframes rot{to{--a:360deg}}
-.fin h2{font-size:clamp(2rem,3.4vw,3.8rem);font-weight:500;letter-spacing:-.045em;line-height:1.02;white-space:nowrap;margin:clamp(150px,28vh,320px) 0 2.4vh}
+.fin h2{font-size:clamp(2rem,3.4vw,3.8rem);font-weight:500;letter-spacing:-.045em;line-height:1.02;white-space:nowrap;margin:0 0 2.4vh}
 .fin h2 .ch{display:inline-block;transform:translateY(60%) rotate(6deg);opacity:0;transition:transform 1s var(--out),opacity 1s var(--out),color .3s}
 .fin.on h2 .ch{transform:none;opacity:1}
 .fin h2 .ch:hover{transform:translateY(-.08em)!important;color:var(--c1);transition:transform .25s var(--out),color .2s}
@@ -167,7 +167,7 @@ footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;paddin
   .row h3{font-size:clamp(2.6rem,13vw,5rem)}
   .fin .btn{padding:16px 22px}
   .fin-cta{gap:10px}
-  .fin h2{font-size:clamp(1.6rem,7.6vw,2.6rem);margin-top:clamp(140px,21vh,190px)}
+  .fin h2{font-size:clamp(1.6rem,7.6vw,2.6rem)}
   .tag{font-size:.8rem;line-height:1.35;text-align:left}
   .chips{margin-top:5vh}
 }
@@ -247,7 +247,6 @@ footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;paddin
   <div class="feed l" aria-hidden="true"><div class="ft"><div class="fc"><i>☎</i><div>Call answered in 1 ring<small>11:42 pm · Tue</small></div></div><div class="fc"><i>📅</i><div>Booked: Thu 10:30<small>Physio · Dr Lee</small></div></div><div class="fc"><i>✓</i><div>Missed call → saved<small>Lunch rush</small></div></div><div class="fc"><i>↗</i><div>Warm transfer to owner<small>Urgent job</small></div></div><div class="fc"><i>✉</i><div>Summary sent to inbox<small>After hours</small></div></div><div class="fc"><i>☎</i><div>Call answered in 1 ring<small>11:42 pm · Tue</small></div></div><div class="fc"><i>📅</i><div>Booked: Thu 10:30<small>Physio · Dr Lee</small></div></div><div class="fc"><i>✓</i><div>Missed call → saved<small>Lunch rush</small></div></div><div class="fc"><i>↗</i><div>Warm transfer to owner<small>Urgent job</small></div></div><div class="fc"><i>✉</i><div>Summary sent to inbox<small>After hours</small></div></div></div></div>
   <div class="feed r" aria-hidden="true"><div class="ft"><div class="fc"><i>⚡</i><div>Lead synced to CRM<small>Zoho · auto</small></div></div><div class="fc"><i>💬</i><div>SMS confirmation sent<small>to caller</small></div></div><div class="fc"><i>☎</i><div>Weekend call handled<small>7:15 am · Sat</small></div></div><div class="fc"><i>📅</i><div>Quote visit booked<small>Fri 2:00 pm</small></div></div><div class="fc"><i>✓</i><div>0 calls to voicemail<small>this week</small></div></div><div class="fc"><i>⚡</i><div>Lead synced to CRM<small>Zoho · auto</small></div></div><div class="fc"><i>💬</i><div>SMS confirmation sent<small>to caller</small></div></div><div class="fc"><i>☎</i><div>Weekend call handled<small>7:15 am · Sat</small></div></div><div class="fc"><i>📅</i><div>Quote visit booked<small>Fri 2:00 pm</small></div></div><div class="fc"><i>✓</i><div>0 calls to voicemail<small>this week</small></div></div></div></div>
   <div class="fin-in">
-    <span class="tag rv"><span class="dot"></span>Your highest-performing, lowest-cost team member</span>
     <h2 id="finH"><span class="sp">You're busy.</span><br>Your phone <span class="g">isn't.</span></h2>
     <p class="fin-k mono rv">Sada AI answers every call.</p>
     <div class="fin-cta rv">
