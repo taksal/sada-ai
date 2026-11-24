@@ -112,12 +112,19 @@ nav{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-
 .tag::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:conic-gradient(from var(--a,0deg),var(--c1),var(--c2),var(--c3),transparent 60%,var(--c1));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:rot 4s linear infinite}
 @property --a{syntax:"<angle>";inherits:false;initial-value:0deg}
 @keyframes rot{to{--a:360deg}}
-.fin h2{font-size:clamp(3.4rem,8vw,9rem);font-weight:700;letter-spacing:-.04em;line-height:.9;white-space:nowrap;margin:clamp(120px,22vh,260px) 0 5vh}
+.fin h2{font-size:clamp(2rem,3.4vw,3.8rem);font-weight:500;letter-spacing:-.045em;line-height:1.02;white-space:nowrap;margin:clamp(150px,28vh,320px) 0 2.4vh}
 .fin h2 .ch{display:inline-block;transform:translateY(60%) rotate(6deg);opacity:0;transition:transform 1s var(--out),opacity 1s var(--out),color .3s}
 .fin.on h2 .ch{transform:none;opacity:1}
 .fin h2 .ch:hover{transform:translateY(-.08em)!important;color:var(--c1);transition:transform .25s var(--out),color .2s}
-.fin-logo{display:block;height:.95em;width:auto;margin:0 auto .18em;filter:drop-shadow(0 0 18px rgba(46,230,246,.55)) drop-shadow(0 0 40px rgba(225,79,224,.35));animation:lf 6s ease-in-out infinite}
-@keyframes lf{50%{transform:translateY(-.06em) rotate(-4deg);filter:drop-shadow(0 0 28px rgba(46,230,246,.8)) drop-shadow(0 0 60px rgba(225,79,224,.5))}}
+.swap{position:relative;display:inline-grid;vertical-align:bottom}
+.swap>span{grid-area:1/1;text-align:left}
+.lost{color:var(--mute);position:relative;animation:lost 5s var(--ease) infinite}
+.lost::after{content:"";position:absolute;left:-2%;right:-2%;top:55%;height:.07em;background:#ff4d6d;transform:scaleX(0);transform-origin:left;animation:strike 5s var(--ease) infinite}
+.fin h2 .swap .won{opacity:0;animation:won 5s var(--ease) infinite,sh 6s linear infinite}
+@keyframes strike{0%,18%{transform:scaleX(0)}30%,46%{transform:scaleX(1)}}
+@keyframes lost{0%,46%{opacity:1;transform:none;filter:none}56%,92%{opacity:0;transform:translateY(-.3em);filter:blur(6px)}100%{opacity:1;transform:none;filter:none}}
+@keyframes won{0%,50%{opacity:0;transform:translateY(.35em);filter:blur(6px)}60%,90%{opacity:1;transform:none;filter:none}98%,100%{opacity:0;transform:translateY(-.2em);filter:blur(4px)}}
+.fin-k{margin:0 0 5vh;font-size:.78rem;letter-spacing:.28em;color:var(--mute)}
 .fin h2 .g{display:inline-block;background-image:linear-gradient(100deg,var(--c1),var(--c2),var(--c3),var(--c2),var(--c1));background-size:200% auto;animation:sh 6s linear infinite;padding-bottom:.06em}
 @keyframes sh{to{background-position:200% center}}
 .fin-sub{font-size:clamp(1.05rem,1.6vw,1.45rem);color:var(--mute);max-width:34em;margin:0 auto 5vh;line-height:1.5}
@@ -168,7 +175,7 @@ footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;paddin
   .row h3{font-size:clamp(2.6rem,13vw,5rem)}
   .fin .btn{padding:16px 22px}
   .fin-cta{gap:10px}
-  .fin h2{font-size:clamp(2.8rem,16vw,5rem);margin-top:clamp(110px,15vh,150px)}
+  .fin h2{font-size:clamp(1.6rem,7.6vw,2.6rem);margin-top:clamp(140px,21vh,190px)}
   .tag{font-size:.8rem;line-height:1.35;text-align:left}
   .chips{margin-top:5vh}
 }
@@ -249,7 +256,8 @@ footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;paddin
   <div class="feed r" aria-hidden="true"><div class="ft"><div class="fc"><i>⚡</i><div>Lead synced to CRM<small>Zoho · auto</small></div></div><div class="fc"><i>💬</i><div>SMS confirmation sent<small>to caller</small></div></div><div class="fc"><i>☎</i><div>Weekend call handled<small>7:15 am · Sat</small></div></div><div class="fc"><i>📅</i><div>Quote visit booked<small>Fri 2:00 pm</small></div></div><div class="fc"><i>✓</i><div>0 calls to voicemail<small>this week</small></div></div><div class="fc"><i>⚡</i><div>Lead synced to CRM<small>Zoho · auto</small></div></div><div class="fc"><i>💬</i><div>SMS confirmation sent<small>to caller</small></div></div><div class="fc"><i>☎</i><div>Weekend call handled<small>7:15 am · Sat</small></div></div><div class="fc"><i>📅</i><div>Quote visit booked<small>Fri 2:00 pm</small></div></div><div class="fc"><i>✓</i><div>0 calls to voicemail<small>this week</small></div></div></div></div>
   <div class="fin-in">
     <span class="tag rv"><span class="dot"></span>Your highest-performing, lowest-cost team member</span>
-    <h2 id="finH"><img src="assets/logo.png" alt="" class="fin-logo"><span class="sp">SADA</span> <span class="g">AI</span></h2>
+    <h2 id="finH"><span class="sp">Every unanswered call</span><br>is a customer <span class="swap"><span class="lost">lost.</span><span class="won g">won.</span></span></h2>
+    <p class="fin-k mono rv">Sada answers every one. 24/7.</p>
     <div class="fin-cta rv">
       <a href="mailto:info@sadaai.com.au?subject=SADA%20AI" class="btn btn-solid hov" id="demoBtn">info@sadaai.com.au <span>→</span></a>
     </div>
@@ -414,7 +422,7 @@ function rip(){
   const fr = fin.getBoundingClientRect();
   const hb = $('#finH').getBoundingClientRect(), cb = $('.fin-cta').getBoundingClientRect(), hw = hb.width, ch = cb.bottom - hb.top;
   const cx = RW/2 + (px > -999 ? (px - fr.left - RW/2)*.04 : 0), cy = (hb.top - fr.top + ch/2) + (py > -999 ? (py - fr.top - RH*.5)*.04 : 0);
-  const base = RW < 820 ? Math.min(RW*.47, RH*.3) : Math.min(Math.max(hw*.64, ch*.85), RW*.36, RH*.42);
+  const base = RW < 820 ? Math.min(Math.max(RW*.5, hw*.6), RH*.34) : Math.min(Math.max(hw*.64, ch*.85), RW*.36, RH*.42);
   rx2.clearRect(0,0,RW,RH);
   // expanding call rings
   if (rt - lastRing > (2.2 - boost*1.6)){ rings.push({r:base, a:.8}); lastRing = rt; }
