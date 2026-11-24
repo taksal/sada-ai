@@ -116,15 +116,7 @@ nav{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-
 .fin h2 .ch{display:inline-block;transform:translateY(60%) rotate(6deg);opacity:0;transition:transform 1s var(--out),opacity 1s var(--out),color .3s}
 .fin.on h2 .ch{transform:none;opacity:1}
 .fin h2 .ch:hover{transform:translateY(-.08em)!important;color:var(--c1);transition:transform .25s var(--out),color .2s}
-.swap{position:relative;display:inline-grid;vertical-align:bottom}
-.swap>span{grid-area:1/1;text-align:left}
-.lost{color:var(--mute);position:relative;animation:lost 5s var(--ease) infinite}
-.lost::after{content:"";position:absolute;left:-2%;right:-2%;top:55%;height:.07em;background:#ff4d6d;transform:scaleX(0);transform-origin:left;animation:strike 5s var(--ease) infinite}
-.fin h2 .swap .won{opacity:0;animation:won 5s var(--ease) infinite,sh 6s linear infinite}
-@keyframes strike{0%,18%{transform:scaleX(0)}30%,46%{transform:scaleX(1)}}
-@keyframes lost{0%,46%{opacity:1;transform:none;filter:none}56%,92%{opacity:0;transform:translateY(-.3em);filter:blur(6px)}100%{opacity:1;transform:none;filter:none}}
-@keyframes won{0%,50%{opacity:0;transform:translateY(.35em);filter:blur(6px)}60%,90%{opacity:1;transform:none;filter:none}98%,100%{opacity:0;transform:translateY(-.2em);filter:blur(4px)}}
-.fin-k{margin:0 0 5vh;font-size:.78rem;letter-spacing:.28em;color:var(--mute)}
+.fin-k{margin:0 0 5vh;font-size:.86rem;letter-spacing:.24em;color:#c9c9d2}
 .fin h2 .g{display:inline-block;background-image:linear-gradient(100deg,var(--c1),var(--c2),var(--c3),var(--c2),var(--c1));background-size:200% auto;animation:sh 6s linear infinite;padding-bottom:.06em}
 @keyframes sh{to{background-position:200% center}}
 .fin-sub{font-size:clamp(1.05rem,1.6vw,1.45rem);color:var(--mute);max-width:34em;margin:0 auto 5vh;line-height:1.5}
@@ -256,8 +248,8 @@ footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;paddin
   <div class="feed r" aria-hidden="true"><div class="ft"><div class="fc"><i>⚡</i><div>Lead synced to CRM<small>Zoho · auto</small></div></div><div class="fc"><i>💬</i><div>SMS confirmation sent<small>to caller</small></div></div><div class="fc"><i>☎</i><div>Weekend call handled<small>7:15 am · Sat</small></div></div><div class="fc"><i>📅</i><div>Quote visit booked<small>Fri 2:00 pm</small></div></div><div class="fc"><i>✓</i><div>0 calls to voicemail<small>this week</small></div></div><div class="fc"><i>⚡</i><div>Lead synced to CRM<small>Zoho · auto</small></div></div><div class="fc"><i>💬</i><div>SMS confirmation sent<small>to caller</small></div></div><div class="fc"><i>☎</i><div>Weekend call handled<small>7:15 am · Sat</small></div></div><div class="fc"><i>📅</i><div>Quote visit booked<small>Fri 2:00 pm</small></div></div><div class="fc"><i>✓</i><div>0 calls to voicemail<small>this week</small></div></div></div></div>
   <div class="fin-in">
     <span class="tag rv"><span class="dot"></span>Your highest-performing, lowest-cost team member</span>
-    <h2 id="finH"><span class="sp">Every unanswered call</span><br>is a customer <span class="swap"><span class="lost">lost.</span><span class="won g">won.</span></span></h2>
-    <p class="fin-k mono rv">Sada answers every one. 24/7.</p>
+    <h2 id="finH"><span class="sp">You're busy.</span><br>Your phone <span class="g">isn't.</span></h2>
+    <p class="fin-k mono rv">Sada AI answers every call.</p>
     <div class="fin-cta rv">
       <a href="mailto:info@sadaai.com.au?subject=SADA%20AI" class="btn btn-solid hov" id="demoBtn">info@sadaai.com.au <span>→</span></a>
     </div>
