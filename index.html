@@ -63,7 +63,7 @@ nav{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-
 .hero h1 .w:nth-child(2) span{transition-delay:.08s}.hero h1 .w:nth-child(3) span{transition-delay:.16s}
 .hero aside{text-align:right;max-width:19em;pointer-events:auto}
 .hero aside p{color:var(--mute);font-size:.95rem;line-height:1.5;margin:14px 0 22px}
-.status{position:absolute;top:calc(max(22px,env(safe-area-inset-top)) + 72px);right:var(--px);display:flex;gap:10px;align-items:center}
+.status{position:absolute;top:calc(max(22px,env(safe-area-inset-top)) + 72px);left:var(--px);display:flex;gap:10px;align-items:center}
 .scroll{position:absolute;left:50%;bottom:22px;width:1px;height:46px;background:var(--line);overflow:hidden}
 .scroll::after{content:"";position:absolute;inset:0;background:var(--ink);animation:sc 2.2s var(--ease) infinite}
 @keyframes sc{from{transform:translateY(-100%)}to{transform:translateY(100%)}}
@@ -254,12 +254,19 @@ function rs(){
   dpr = Math.min(devicePixelRatio||1, 2); W = cv.clientWidth; H = cv.clientHeight; cv.width = W*dpr; cv.height = H*dpr; ctx.setTransform(dpr,0,0,dpr,0,0);
   const hr = $('.hero').getBoundingClientRect(), st = $('.status').getBoundingClientRect(), tx = $('.hero-txt').getBoundingClientRect(), as = $('.hero aside').getBoundingClientRect(), h1 = $('.hero h1').getBoundingClientRect();
   const stacked = getComputedStyle($('.hero-txt')).flexDirection === 'column';
-  let top = st.bottom - hr.top + 18, bottom, left, right;
-  if (stacked){ bottom = tx.top - hr.top - 18; left = 0; right = W; }
-  else { bottom = Math.min(as.top - hr.top - 24, H - 40); left = Math.max(h1.right - hr.left - W*.12, W*.4); right = W; top = Math.max(top, 80); }
-  const bh = Math.max(bottom - top, 120), bw = right - left;
-  const sc = Math.min(bw*.82/1.25, bh/2.15, 900);
-  fit = {s:sc, ox:left + bw/2, oy:top + bh/2};
+  const top = Math.max(st.bottom - hr.top + 14, 70);
+  const place = (l, r, t, b, k) => { const bw = r - l, bh = Math.max(b - t, 120); return {s:Math.min(bw*k/1.22, bh/2.05, 1000), ox:l + bw/2, oy:t + bh/2}; };
+  if (stacked){ fit = place(0, W, top, tx.top - hr.top - 18, .82); }
+  else {
+    const nav = 84, h1R = h1.right - hr.left + 24, asL = as.left - hr.left - 24, asT = as.top - hr.top - 20;
+    // A: full-height column between the headline and the right-hand text
+    const A = place(Math.max(h1R, W*.36), asL, nav, H - 30, .96);
+    // B: whole right side, above the right-hand text
+    const B = place(Math.max(h1R - W*.1, W*.4), W, nav, Math.min(asT, H - 40), .9);
+    // C: right side, full height, above the headline line (tall screens)
+    const C = place(W*.42, W, nav, h1.top - hr.top - 20, .9);
+    fit = [A, B, C].reduce((m, f) => f.s > m.s ? f : m);
+  }
 }
 rs(); addEventListener('resize', rs); document.fonts && document.fonts.ready.then(rs); setTimeout(rs, 1300);
 const col = y => { const t = Math.max(0, Math.min(1, (y+1)/2)); const a=[46,230,246], b=[127,155,255], c=[225,79,224]; const [p,q,f] = t<.5 ? [a,b,t*2] : [b,c,(t-.5)*2]; return p.map((v,k) => Math.round(v+(q[k]-v)*f)).join(','); };
