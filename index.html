@@ -142,7 +142,15 @@ nav{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-
 .fc small{display:block;font-family:var(--mono);font-size:.66rem;letter-spacing:.1em;text-transform:uppercase;color:var(--mute);margin-top:2px}
 .fc .ok{color:#3cf0a0}
 @media (max-width:1180px){.feed{display:none}}
-footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;padding:26px var(--px) max(26px,env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+footer{display:flex;justify-content:space-between;gap:14px 30px;align-items:center;flex-wrap:wrap;padding:26px var(--px) max(26px,env(safe-area-inset-bottom));border-top:1px solid var(--line)}
+footer .f-l,footer .f-r{display:inline-flex;align-items:center;gap:12px;flex-wrap:wrap}
+footer .f-l img{height:18px;opacity:.85}
+footer i{font-style:normal;color:#55555f}
+footer i::before{content:"— "}
+@media (max-width:820px){footer{flex-direction:column;align-items:flex-start;gap:10px}footer i{flex-basis:100%;margin-top:-4px}footer i::before{content:none}footer .f-r b{display:none}footer .f-r{gap:8px 10px;margin-top:6px}footer .f-a{flex-basis:100%}}
+footer .f-r{color:#b5b5c0}
+footer .f-r b{color:#55555f;font-weight:400}
+footer .dot{width:6px;height:6px}
 
 /* reveal */
 .rv{opacity:0;transform:translateY(40px);transition:opacity 1.2s var(--out),transform 1.2s var(--out)}
@@ -255,7 +263,10 @@ footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;paddin
   </div>
 </section>
 
-<footer class="mono"><span>© <span id="yr">2026</span> SADA AI · Amigra Networks</span><span>Sydney, Australia</span></footer>
+<footer class="mono">
+  <span class="f-l"><img src="assets/logo.png" alt="">© <span id="yr">2026</span> SADA AI <i>an Amigra Networks company</i></span>
+  <span class="f-r"><span class="dot"></span><span>Built in Sydney</span><b>·</b><span class="f-a">Answering calls across AU &amp; NZ</span></span>
+</footer>
 
 <script>
 (() => {
