@@ -106,13 +106,13 @@ nav{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-
 /* finale */
 .fin{position:relative;min-height:100vh;min-height:100svh;padding:130px var(--px) 110px;display:grid;place-items:center;text-align:center;overflow:hidden;isolation:isolate}
 #ripple{position:absolute;inset:0;width:100%;height:100%;z-index:-1}
-.fin-in{position:relative;max-width:1100px;z-index:1}
+.fin-in{position:relative;max-width:1100px;z-index:1;text-align:center}
 .fin-in::before{content:"";position:absolute;inset:-6% -4%;z-index:-1;background:radial-gradient(closest-side,rgba(7,7,10,.85),rgba(7,7,10,.55) 60%,transparent);pointer-events:none}
-.tag{display:inline-flex;align-items:center;gap:12px;padding:10px 20px 10px 16px;border-radius:999px;font-size:.95rem;color:var(--ink);background:rgba(10,10,16,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);position:relative}
+.tag{display:inline-flex;align-items:center;gap:12px;padding:9px 18px 9px 14px;border-radius:999px;font-size:.88rem;color:var(--ink);background:rgba(10,10,16,.55);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);position:relative}
 .tag::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:conic-gradient(from var(--a,0deg),var(--c1),var(--c2),var(--c3),transparent 60%,var(--c1));-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:rot 4s linear infinite}
 @property --a{syntax:"<angle>";inherits:false;initial-value:0deg}
 @keyframes rot{to{--a:360deg}}
-.fin h2{font-size:clamp(3rem,10.5vw,11.5rem);font-weight:500;letter-spacing:-.06em;line-height:.86;margin:5vh 0 4vh}
+.fin h2{font-size:clamp(2.8rem,6.6vw,7.5rem);font-weight:500;letter-spacing:-.055em;line-height:.9;margin:clamp(120px,22vh,260px) 0 5vh}
 .fin h2 .ch{display:inline-block;transform:translateY(60%) rotate(6deg);opacity:0;transition:transform 1s var(--out),opacity 1s var(--out),color .3s}
 .fin.on h2 .ch{transform:none;opacity:1}
 .fin h2 .ch:hover{transform:translateY(-.08em)!important;color:var(--c1);transition:transform .25s var(--out),color .2s}
@@ -126,7 +126,8 @@ nav{position:fixed;inset:0 0 auto;z-index:20;display:flex;justify-content:space-
 .btn-solid::before{background:#fff}
 .btn-solid:hover{color:#000}
 @keyframes halo{70%{box-shadow:0 0 0 18px rgba(127,155,255,0),0 18px 60px -18px rgba(225,79,224,.8)}100%{box-shadow:0 0 0 0 rgba(127,155,255,0),0 18px 60px -18px rgba(225,79,224,.8)}}
-.copy{background:rgba(10,10,16,.5);color:var(--ink);cursor:pointer;font-family:var(--mono)}
+.copy{background:rgba(10,10,16,.5);color:var(--mute);cursor:pointer;font-family:var(--mono);padding-inline:24px!important}
+.copy:hover{color:#000}
 .copy em{font-style:normal;opacity:.5;margin-left:4px;transition:opacity .3s}
 .copy:hover em{opacity:1}
 .chips{display:flex;justify-content:center;gap:clamp(18px,4vw,56px);margin-top:7vh;flex-wrap:wrap}
@@ -167,9 +168,9 @@ footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;paddin
   .row p{text-align:left;font-size:.9rem;max-height:0;transform:none;transition:opacity .5s,max-height .5s var(--out)}
   .row.act p{max-height:5em}
   .row h3{font-size:clamp(2.6rem,13vw,5rem)}
-  .fin .btn{padding:18px 26px;width:100%;justify-content:center}
-  .fin-cta{flex-direction:column;max-width:360px;margin:0 auto}
-  .fin h2{font-size:clamp(3rem,15.5vw,6rem)}
+  .fin .btn{padding:16px 22px}
+  .fin-cta{gap:10px}
+  .fin h2{font-size:clamp(2.6rem,13vw,4.5rem);margin-top:clamp(110px,15vh,150px)}
   .tag{font-size:.8rem;line-height:1.35;text-align:left}
   .chips{margin-top:5vh}
 }
@@ -251,15 +252,9 @@ footer{display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;paddin
   <div class="fin-in">
     <span class="tag rv"><span class="dot"></span>Your highest-performing, lowest-cost team member</span>
     <h2 id="finH"><span class="sp">Let it take</span><br><span class="g">the call.</span></h2>
-    <p class="fin-sub rv">Stop losing calls to voicemail. Let Sada answer every one — <b>starting this week.</b></p>
     <div class="fin-cta rv">
-      <a href="mailto:info@sadaai.com.au?subject=SADA%20AI%20demo" class="btn btn-solid hov" id="demoBtn">Book a demo →</a>
-      <button class="btn copy hov" id="copyBtn" type="button">info@sadaai.com.au <em id="copyTxt">copy</em></button>
-    </div>
-    <div class="chips mono rv">
-      <div><b>24/7</b>Always on</div>
-      <div><b>1 ring</b>No hold music</div>
-      <div><b>This week</b>Go live</div>
+      <a href="mailto:info@sadaai.com.au?subject=SADA%20AI" class="btn btn-solid hov" id="demoBtn">info@sadaai.com.au <span>→</span></a>
+      <button class="btn copy hov" id="copyBtn" type="button" aria-label="Copy email"><span id="copyTxt">Copy</span></button>
     </div>
   </div>
 </section>
@@ -412,7 +407,7 @@ new IntersectionObserver(([e]) => { finOn = e.isIntersecting; if (finOn){ fin.cl
 $('#demoBtn').addEventListener('pointerenter', () => boost = 1);
 $('#copyBtn').onclick = async () => {
   try { await navigator.clipboard.writeText('info@sadaai.com.au'); } catch(_){ const t = document.createElement('textarea'); t.value = 'info@sadaai.com.au'; document.body.appendChild(t); t.select(); document.execCommand('copy'); t.remove(); }
-  $('#copyTxt').textContent = 'copied ✓'; boost = 1; setTimeout(() => $('#copyTxt').textContent = 'copy', 1800);
+  $('#copyTxt').textContent = 'Copied ✓'; boost = 1; setTimeout(() => $('#copyTxt').textContent = 'Copy', 1800);
 };
 const rc = $('#ripple'), rx2 = rc.getContext('2d'); let RW, RH, rings = [], lastRing = 0, rt = 0;
 function rrs(){ const d = Math.min(devicePixelRatio||1, 2); RW = rc.clientWidth; RH = rc.clientHeight; rc.width = RW*d; rc.height = RH*d; rx2.setTransform(d,0,0,d,0,0); }
@@ -423,27 +418,29 @@ function rip(){
   if (!finOn) return;
   rt += 1/60; boost *= .97;
   const fr = fin.getBoundingClientRect();
-  const hw = $('#finH').getBoundingClientRect().width, fi = $('.fin-in').getBoundingClientRect();
-  const cx = RW/2 + (px > -999 ? (px - fr.left - RW/2)*.04 : 0), cy = (fi.top - fr.top + fi.height/2) + (py > -999 ? (py - fr.top - RH*.5)*.04 : 0);
-  const base = RW < 820 ? Math.min(RW*.46, RH*.3) : Math.min(Math.max(hw*.56, fi.height*.6), RW*.4);
+  const hb = $('#finH').getBoundingClientRect(), cb = $('.fin-cta').getBoundingClientRect(), hw = hb.width, ch = cb.bottom - hb.top;
+  const cx = RW/2 + (px > -999 ? (px - fr.left - RW/2)*.04 : 0), cy = (hb.top - fr.top + ch/2) + (py > -999 ? (py - fr.top - RH*.5)*.04 : 0);
+  const base = RW < 820 ? Math.min(RW*.47, RH*.3) : Math.min(Math.max(hw*.64, ch*.85), RW*.36, RH*.42);
   rx2.clearRect(0,0,RW,RH);
   // expanding call rings
-  if (rt - lastRing > (1.5 - boost*1.1)){ rings.push({r:base*.95, a:1}); lastRing = rt; }
+  if (rt - lastRing > (2.2 - boost*1.6)){ rings.push({r:base, a:.8}); lastRing = rt; }
   rings = rings.filter(g => g.a > .01);
-  rings.forEach((g,i) => { g.r += 1.6 + boost*3; g.a *= .985; const gr = rx2.createLinearGradient(cx-g.r, cy, cx+g.r, cy); gr.addColorStop(0, `rgba(46,230,246,${g.a*.5})`); gr.addColorStop(.5, `rgba(127,155,255,${g.a*.35})`); gr.addColorStop(1, `rgba(225,79,224,${g.a*.5})`); rx2.strokeStyle = gr; rx2.lineWidth = 1.2; rx2.beginPath(); rx2.arc(cx, cy, g.r, 0, 7); rx2.stroke(); });
+  rings.forEach((g,i) => { g.r += 1.1 + boost*2.5; g.a *= .982; const gr = rx2.createLinearGradient(cx-g.r, cy, cx+g.r, cy); gr.addColorStop(0, `rgba(46,230,246,${g.a*.5})`); gr.addColorStop(.5, `rgba(127,155,255,${g.a*.35})`); gr.addColorStop(1, `rgba(225,79,224,${g.a*.5})`); rx2.strokeStyle = gr; rx2.lineWidth = 1.2; rx2.beginPath(); rx2.arc(cx, cy, g.r, 0, 7); rx2.stroke(); });
   // radial voice waveform
-  const N = RW < 820 ? 90 : 160, rot = rt*.12;
+  const N = RW < 820 ? 72 : 120, rot = rt*.08;
   rx2.lineCap = 'round';
   for (let i = 0; i < N; i++){
     const a = i/N*Math.PI*2 + rot;
     const v = (Math.sin(a*3 + rt*2.2) + Math.sin(a*7 - rt*3.1)*.6 + Math.sin(a*13 + rt*5)*.35 + 2) / 4;
-    const len = base*(.04 + v*.13)*(1 + boost*.9);
+    const len = base*(.02 + v*.07)*(1 + boost*1.2);
     const r1 = base, r2 = base + len;
-    rx2.strokeStyle = `rgba(${mix(i/N + rt*.03)},${(.12 + v*.28)*(1 + boost*.8)})`; rx2.lineWidth = RW < 820 ? 2 : 2.4;
+    rx2.strokeStyle = `rgba(${mix(i/N + rt*.03)},${(.25 + v*.5)*(.8 + boost*.4)})`; rx2.lineWidth = RW < 820 ? 1.6 : 2;
     rx2.beginPath(); rx2.moveTo(cx + Math.cos(a)*r1, cy + Math.sin(a)*r1); rx2.lineTo(cx + Math.cos(a)*r2, cy + Math.sin(a)*r2); rx2.stroke();
   }
+  rx2.strokeStyle = 'rgba(255,255,255,.07)'; rx2.lineWidth = 1; rx2.beginPath(); rx2.arc(cx, cy, base*.94, 0, 7); rx2.stroke();
+  const oa = rt*.6; rx2.fillStyle = '#fff'; rx2.shadowColor = '#7f9bff'; rx2.shadowBlur = 18; rx2.beginPath(); rx2.arc(cx + Math.cos(oa)*base*.94, cy + Math.sin(oa)*base*.94, 3, 0, 7); rx2.fill(); rx2.shadowBlur = 0;
   // soft core glow
-  const cg = rx2.createRadialGradient(cx, cy, 0, cx, cy, base*1.1); cg.addColorStop(0, `rgba(127,155,255,${.16 + boost*.12})`); cg.addColorStop(.6, 'rgba(225,79,224,.05)'); cg.addColorStop(1, 'transparent');
+  const cg = rx2.createRadialGradient(cx, cy, 0, cx, cy, base*1.1); cg.addColorStop(0, `rgba(127,155,255,${.1 + boost*.1})`); cg.addColorStop(.6, 'rgba(225,79,224,.05)'); cg.addColorStop(1, 'transparent');
   rx2.fillStyle = cg; rx2.beginPath(); rx2.arc(cx, cy, base*1.1, 0, 7); rx2.fill();
   if (!RM) requestAnimationFrame(rip);
 }
