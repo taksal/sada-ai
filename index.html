@@ -233,7 +233,9 @@ tick(); setInterval(tick, 1000);
 
 /* cursor */
 const cur = $('#cur'); let cx = innerWidth/2, cy = innerHeight/2, tx = cx, ty = cy, mx = 0, my = 0;
-addEventListener('pointermove', e => { cur.classList.add('live'); tx = e.clientX; ty = e.clientY; mx = e.clientX/innerWidth - .5; my = e.clientY/innerHeight - .5; });
+let px = -9999, py = -9999, energy = 0;
+addEventListener('pointermove', e => { cur.classList.add('live'); const sp = Math.hypot(e.clientX - tx, e.clientY - ty); energy = Math.min(1, energy + sp/260); tx = e.clientX; ty = e.clientY; px = e.clientX; py = e.clientY; mx = e.clientX/innerWidth - .5; my = e.clientY/innerHeight - .5; });
+addEventListener('pointerleave', () => { px = py = -9999; });
 document.querySelectorAll('.hov').forEach(el => { el.addEventListener('pointerenter', () => cur.classList.add('big')); el.addEventListener('pointerleave', () => cur.classList.remove('big')); });
 if (matchMedia('(hover:hover) and (pointer:fine)').matches) (function cl(){ cx += (tx-cx)*.2; cy += (ty-cy)*.2; cur.style.transform = `translate(${cx}px,${cy}px)`; requestAnimationFrame(cl); })();
 
@@ -270,24 +272,34 @@ function rs(){
 }
 rs(); addEventListener('resize', rs); document.fonts && document.fonts.ready.then(rs); setTimeout(rs, 1300);
 const col = y => { const t = Math.max(0, Math.min(1, (y+1)/2)); const a=[46,230,246], b=[127,155,255], c=[225,79,224]; const [p,q,f] = t<.5 ? [a,b,t*2] : [b,c,(t-.5)*2]; return p.map((v,k) => Math.round(v+(q[k]-v)*f)).join(','); };
-let ry = 0, rx = 0, auto = 0, sy = 0;
+let ry = 0, rx = 0, vry = 0, vrx = 0, auto = 0, sy = 0;
 function proj([x,y,z], s, ox, oy){
   const cy = Math.cos(ry), sY = Math.sin(ry), cX = Math.cos(rx), sX = Math.sin(rx);
   let X = x*cy + z*sY, Z = -x*sY + z*cy, Y = y*cX - Z*sX; Z = y*sX + Z*cX;
   const k = 3.2/(3.2 + Z); return [ox + X*s*k, oy + Y*s*k, k, y];
 }
 function frame(){
-  auto += RM ? 0 : .0035;
-  ry += ((Math.sin(auto)*.55 + mx*.9) - ry)*.05;
-  rx += ((my*-.5 + .08) - rx)*.05;
+  auto += RM ? 0 : .0045 + energy*.02;
+  // spring physics: fast, snappy follow with a little overshoot
+  vry += ((Math.sin(auto)*.35 + mx*1.7) - ry)*.085; vry *= .8; ry += vry;
+  vrx += ((my*-1.0 + .08) - rx)*.085; vrx *= .8; rx += vrx;
+  energy *= .95;
+  const cyc = py + scrollY; // cursor in canvas space
   const s = fit.s, ox = fit.ox, oy = fit.oy - scrollY*.25;
   ctx.clearRect(0,0,W,H);
   dust.forEach(d => { const [x,y,k] = proj(d, s, ox, oy); ctx.fillStyle = `rgba(255,255,255,${.25*k})`; ctx.fillRect(x, y, 1.2*k, 1.2*k); });
   const pr = V.map(v => proj(v, s, ox, oy));
-  EDG.forEach(([a,b,o]) => { const A = pr[a], B = pr[b]; const g = ctx.createLinearGradient(A[0],A[1],B[0],B[1]); g.addColorStop(0, `rgba(${col(A[3]*1.4)},${o*.85})`); g.addColorStop(1, `rgba(${col(B[3]*1.4)},${o*.85})`); ctx.strokeStyle = g; ctx.lineWidth = o === 1 ? 2.2 : 1; ctx.beginPath(); ctx.moveTo(A[0],A[1]); ctx.lineTo(B[0],B[1]); ctx.stroke(); });
+  EDG.forEach(([a,b,o]) => { const A = pr[a], B = pr[b]; const g = ctx.createLinearGradient(A[0],A[1],B[0],B[1]); g.addColorStop(0, `rgba(${col(A[3]*1.4)},${o*.85})`); g.addColorStop(1, `rgba(${col(B[3]*1.4)},${o*.85})`); ctx.strokeStyle = g; ctx.lineWidth = (o === 1 ? 2.2 : 1) * (1 + energy*.35); ctx.beginPath(); ctx.moveTo(A[0],A[1]); ctx.lineTo(B[0],B[1]); ctx.stroke(); });
   ctx.globalCompositeOperation = 'lighter';
-  pr.slice(0,n).forEach(p => { const c = col(p[3]*1.4); ctx.fillStyle = `rgba(${c},1)`; ctx.shadowColor = `rgb(${c})`; ctx.shadowBlur = 16; ctx.beginPath(); ctx.arc(p[0], p[1], 3.2*p[2], 0, 7); ctx.fill(); });
-  pulses.forEach(p => { p.t += p.s; if (p.t > 1){ p.t = 0; p.e = Math.floor(Math.random()*E.length); } const [a,b] = E[p.e], A = pr[a], B = pr[b]; const x = A[0]+(B[0]-A[0])*p.t, y = A[1]+(B[1]-A[1])*p.t; ctx.fillStyle = '#fff'; ctx.shadowColor = '#fff'; ctx.shadowBlur = 18; ctx.beginPath(); ctx.arc(x, y, 2, 0, 7); ctx.fill(); });
+  pr.slice(0,n).forEach(p => {
+    const c = col(p[3]*1.4), d = Math.hypot(p[0]-px, p[1]-cyc), near = Math.max(0, 1 - d/170);
+    if (near > 0){ ctx.strokeStyle = `rgba(${c},${near*.9})`; ctx.lineWidth = 1.2; ctx.beginPath(); ctx.moveTo(p[0],p[1]); ctx.lineTo(px,cyc); ctx.stroke(); }
+    const r = 3.2*p[2]*(1 + energy*.5 + near*1.3);
+    ctx.fillStyle = `rgba(${c},1)`; ctx.shadowColor = `rgb(${c})`; ctx.shadowBlur = 16 + near*24 + energy*12;
+    ctx.beginPath(); ctx.arc(p[0], p[1], r, 0, 7); ctx.fill();
+    if (near > .3){ ctx.fillStyle = '#fff'; ctx.beginPath(); ctx.arc(p[0], p[1], r*.45, 0, 7); ctx.fill(); }
+  });
+  pulses.forEach(p => { p.t += p.s*(1 + energy*5); if (p.t > 1){ p.t = 0; p.e = Math.floor(Math.random()*E.length); } const [a,b] = E[p.e], A = pr[a], B = pr[b]; const x = A[0]+(B[0]-A[0])*p.t, y = A[1]+(B[1]-A[1])*p.t; ctx.fillStyle = '#fff'; ctx.shadowColor = '#fff'; ctx.shadowBlur = 18; ctx.beginPath(); ctx.arc(x, y, 2, 0, 7); ctx.fill(); });
   ctx.shadowBlur = 0; ctx.globalCompositeOperation = 'source-over';
   if (scrollY < H*1.2) requestAnimationFrame(frame); else { stopped = true; }
 }
